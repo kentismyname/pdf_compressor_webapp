@@ -21,15 +21,15 @@
             e.preventDefault();
             let formData = new FormData(this);
             let status = document.getElementById("status");
-
+    
             status.innerHTML = "⏳ Compressing... Please wait.";
             status.style.color = "black";
-
-            let response = await fetch("/upload", {
+    
+            let response = await fetch("https://your-heroku-app-name.herokuapp.com/upload", {
                 method: "POST",
                 body: formData
             });
-
+    
             let result = await response.text();
             status.innerHTML = result;
         };
