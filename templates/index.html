@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Compressor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Upload a PDF to Compress</h2>
+        <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".pdf" required>
+            <button type="submit">Compress PDF</button>
+        </form>
+        <p id="status"></p>
+    </div>
+
+    <script>
+        document.getElementById("upload-form").onsubmit = async function(e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            let status = document.getElementById("status");
+
+            status.innerHTML = "⏳ Compressing... Please wait.";
+            status.style.color = "black";
+
+            let response = await fetch("/upload", {
+                method: "POST",
+                body: formData
+            });
+
+            let result = await response.text();
+            status.innerHTML = result;
+        };
+    </script>
+</body>
+</html>
